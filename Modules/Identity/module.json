@@ -1,0 +1,13 @@
+{
+  "name": "Identity",
+  "alias": "identity",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\Identity\\Providers\\IdentityServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

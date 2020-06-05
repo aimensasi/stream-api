@@ -1,0 +1,25 @@
+{
+  "name": "aimensasi/core",
+  "description": "",
+  "authors": [
+    {
+      "name": "AIMEN.S.A.SASI",
+      "email": "aimensasi@icloud.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\Core\\Providers\\CoreServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+      "psr-4": {
+        "Modules\\Core\\": ""
+      }
+  }
+}

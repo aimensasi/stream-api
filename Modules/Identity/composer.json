@@ -1,0 +1,28 @@
+{
+  "name": "aimensasi/identity",
+  "description": "",
+  "authors": [
+    {
+      "name": "AIMEN.S.A.SASI",
+      "email": "aimensasi@icloud.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\Identity\\Providers\\IdentityServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\Identity\\": ""
+    }
+  },
+  "require": {
+    "laravel/passport": "^8.4"
+  }
+}
