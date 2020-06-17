@@ -22,7 +22,7 @@ class AuthController extends Controller{
 	 * @param Request $request
 	 * @return \Illuminate\Http\Response
 	 **/
-	public static function register(Request $request){
+	public function register(Request $request){
 		$validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
@@ -49,8 +49,11 @@ class AuthController extends Controller{
             $data['client_secret'] = $request->header('client-secret');
 
             $result = Identity::createAccessToken($data);
-            $result['id'] = $user->id;
-            $result['email'] = $user->email;
+            $result['user'] = [
+                'id' => $user->id,
+                'email' => $user->email,
+            ];
+
 
             return Response::create($result);
             
@@ -69,7 +72,7 @@ class AuthController extends Controller{
      * @param Request $request
      * @return \Illuminate\Http\Response
      **/
-    public static function login(Request $request){
+    public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|exists:users',
             'password' => 'required|min:6',
@@ -103,9 +106,16 @@ class AuthController extends Controller{
         $data['client_secret'] = $request->header('client-secret');
 
         $result = Identity::createAccessToken($data);
-        $result['id'] = $user->id;
-        $result['email'] = $user->email;
+        $result['user'] = [
+            'id' => $user->id,
+            'email' => $user->email,
+        ];
 
         return Response::create($result);
+    }
+
+
+    public function check(){
+        return Response::success();
     }
 }
