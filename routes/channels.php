@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('connect', function ($user, $id) {
-    return true;
+Broadcast::channel('live-stream.{postId}', function ($user, $postId) {
+    return $user->id === Post::findOrNew($postId)->user_id;
 });
