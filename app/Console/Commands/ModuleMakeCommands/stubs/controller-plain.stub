@@ -1,0 +1,17 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
+class $CLASS$ extends Controller{
+
+	/**
+	* The path to the "view" folder of this controller
+	*
+	* @var string
+	*/
+	public const PATH = '';
+	
+}

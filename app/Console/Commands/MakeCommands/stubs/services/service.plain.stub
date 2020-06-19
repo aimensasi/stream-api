@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+use App\Services\Shared\TransformerService;
+
+class DummyClass extends TransformerService{
+
+
+
+	public function transform($resource){
+		return [
+			// code...
+		];
+	}
+}
