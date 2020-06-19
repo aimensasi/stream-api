@@ -52,8 +52,8 @@ class PostServices extends TransformerService{
       broadcast(new LiveStream($post))->toOthers();
     }
 
-		return Response::success([
-			"message" => "post was successfully updated."
+		return Response::create([
+      "post" => $post
 		]);
   }
 
