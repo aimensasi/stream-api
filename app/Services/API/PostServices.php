@@ -6,6 +6,7 @@ use Modules\Identity\Identity;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\Shared\TransformerService;
+use App\Events\LiveStream;
 
 use Modules\Core\Helpers\Response;
 
@@ -45,7 +46,11 @@ class PostServices extends TransformerService{
 		$post = Post::create([
       'user_id' => Identity::currentUser('api')->id,
       'type' => $request->type,
-		]);
+    ]);
+    
+    if($post->type == 'Live'){
+      broadcast(new LiveStream($post))->toOthers();
+    }
 
 		return Response::success([
 			"message" => "post was successfully updated."
