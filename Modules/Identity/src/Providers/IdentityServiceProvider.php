@@ -14,8 +14,8 @@ class IdentityServiceProvider extends ServiceProvider{
    * @return void
    */
   public function boot(){
-    Passport::tokensExpireIn(now()->addDays(1));
-    Passport::refreshTokensExpireIn(now()->addDays(30));
+    Passport::tokensExpireIn(now()->addYear());
+    Passport::refreshTokensExpireIn(now()->addYear());
 
     $this->registerConfig();
     $this->registerFactories();

@@ -41,11 +41,15 @@ class PostServices extends TransformerService{
   public static function store(Request $request){
     $request->validate([
       'type' => 'required',
+      'signal' => 'required',
+      'socket_id' => 'required',
 		]);
 
 		$post = Post::create([
       'user_id' => Identity::currentUser('api')->id,
       'type' => $request->type,
+      'signal' => $request->signal,
+      'socket_id' => $request->socket_id,
     ]);
     
     if($post->type == 'Live'){
@@ -121,6 +125,8 @@ class PostServices extends TransformerService{
       'id' => $post->id,
       'user_id' => $post->user_id,
       'type' => $post->type,
+      'signal' => $post->signal,
+      'socket_id' => $post->socket_id,
 		];
 	}
 }
