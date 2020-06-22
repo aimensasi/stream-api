@@ -21,6 +21,7 @@ Route::middleware('auth:api')->group(function(){
 	Route::get('check', 'API\AuthController@check')->name('check');
 
 	Route::resource('posts', 'API\PostsController');
+	Route::post('posts/{post}/join', 'API\PostsController@join');
 });
 
 

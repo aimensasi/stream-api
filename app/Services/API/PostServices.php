@@ -7,6 +7,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\Shared\TransformerService;
 use App\Events\LiveStream;
+use App\Events\JoinPostEvent;
+
 
 use Modules\Core\Helpers\Response;
 
@@ -69,6 +71,20 @@ class PostServices extends TransformerService{
    */
   public static function show(Post $post){
     return (new self)->transform($post);
+  }
+
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\Post  $post
+   * @return \Illuminate\Http\Response
+   */
+  public static function join(Request $request, Post $post){
+    broadcast(new JoinPostEvent($post, $request->signal));
+
+    return Response::success();
   }
 
   /**
