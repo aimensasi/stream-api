@@ -20,7 +20,8 @@ class PostServices extends TransformerService{
    * @return \Illuminate\Http\Response
    */
   public static function index(){
-		$posts = Post::all();
+    $user = Identity::currentUser('api');
+		$posts = Post::where('user_id', '!=', $user->id)->get();
 
 		return Response::create(['rows' => (new self)->transformCollection($posts), 'total' => count($posts)]);
   }
