@@ -52,6 +52,17 @@ class PostsController extends Controller{
   }
 
   /**
+   * Join the specific post.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\Post  $post
+   * @return \Illuminate\Http\Response
+   */
+  public function addIce(Request $request, Post $post){
+    return PostServices::addIce($request, $post);
+  }
+
+  /**
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request

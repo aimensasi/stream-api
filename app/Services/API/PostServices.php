@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Services\Shared\TransformerService;
 use App\Events\LiveStream;
 use App\Events\JoinPostEvent;
+use App\Events\ICECandidateEvent;
+
+
 
 
 use Modules\Core\Helpers\Response;
@@ -84,6 +87,19 @@ class PostServices extends TransformerService{
    */
   public static function join(Request $request, Post $post){
     broadcast(new JoinPostEvent($post, $request->signal, $request->socket_id));
+
+    return Response::success();
+  }
+
+    /**
+   * Display the specified resource.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\Post  $post
+   * @return \Illuminate\Http\Response
+   */
+  public static function addIce(Request $request, Post $post){
+    broadcast(new ICECandidateEvent($post, $request->candidate, $request->socket_id));
 
     return Response::success();
   }

@@ -22,6 +22,7 @@ Route::middleware('auth:api')->group(function(){
 
 	Route::resource('posts', 'API\PostsController');
 	Route::post('posts/{post}/join', 'API\PostsController@join');
+	Route::post('posts/{post}/ice', 'API\PostsController@addIce');
 });
 
 
