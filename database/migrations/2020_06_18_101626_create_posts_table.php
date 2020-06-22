@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration{
             $table->unsignedBigInteger('user_id');
             $table->string('type');
             $table->longText('caption')->nullable();
-            $table->json('signal')->nullable();
+            $table->longText('signal')->nullable();
             $table->string('socket_id')->nullable();
             $table->timestamps();
         });
