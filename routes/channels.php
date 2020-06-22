@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('live-stream.{postId}', function ($user, $postId) {
-    return $user->id === Post::findOrNew($postId)->user_id;
+    return true;
 });
