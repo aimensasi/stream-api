@@ -83,7 +83,7 @@ class PostServices extends TransformerService{
    * @return \Illuminate\Http\Response
    */
   public static function join(Request $request, Post $post){
-    broadcast(new JoinPostEvent($post, $request->signal));
+    broadcast(new JoinPostEvent($post, $request->signal, $request->socket_id));
 
     return Response::success();
   }

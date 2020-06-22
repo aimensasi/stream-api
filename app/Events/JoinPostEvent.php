@@ -16,15 +16,17 @@ class JoinPostEvent implements ShouldBroadcast{
 
     public $signal;
     public $post;
+    public $socketId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Post $post, $signal){
+    public function __construct(Post $post, $signal, $socketId){
         $this->post = $post;
         $this->signal = $signal;
+        $this->socket_id = $socketId;
     }
 
     /**
