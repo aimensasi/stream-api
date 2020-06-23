@@ -84,7 +84,7 @@ class PostServices extends TransformerService{
    * @return \Illuminate\Http\Response
    */
   public static function join(Request $request, Post $post){
-    broadcast(new JoinPostEvent($post, $request->signal, $request->socket_id));
+    broadcast(new JoinPostEvent($post, $request->signal, $request->socket_id))->toOthers();
 
     return Response::success();
   }
@@ -97,7 +97,7 @@ class PostServices extends TransformerService{
    * @return \Illuminate\Http\Response
    */
   public static function addIce(Request $request, Post $post){
-    broadcast(new ICECandidateEvent($post, $request->candidate, $request->socket_id));
+    broadcast(new ICECandidateEvent($post, $request->candidate, $request->socket_id))->toOthers();
 
     return Response::success();
   }
