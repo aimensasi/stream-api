@@ -47,20 +47,18 @@ class PostServices extends TransformerService{
   public static function store(Request $request){
     $request->validate([
       'type' => 'required',
-      'signal' => 'required',
-      'socket_id' => 'required',
+      'socket_id' => 'required'
 		]);
 
 		$post = Post::create([
       'user_id' => Identity::currentUser('api')->id,
       'type' => $request->type,
-      'signal' => $request->signal,
-      'socket_id' => $request->socket_id,
+      'socket_id' => $request->socket_id
     ]);
     
-    if($post->type == 'Live'){
-      broadcast(new LiveStream($post))->toOthers();
-    }
+    // if($post->type == 'Live'){
+    //   // broadcast(new LiveStream($post))->toOthers();
+    // }
 
 		return Response::create([
       "post" => $post
@@ -123,9 +121,11 @@ class PostServices extends TransformerService{
    */
   public static function update(Request $request, Post $post){
 		$request->validate([
-			// add attributes to validate
-		]);
-
+      'signal' => 'required',
+    ]);
+    
+    $post->signal = $request->signal;
+    $post->save();
 
 		return Response::success([
 			"message" => "post was successfully updated."
