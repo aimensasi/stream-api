@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
-
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('live-stream.{postId}', function ($user, $postId) {
-    return true;
+Broadcast::channel('live-stream.{postId}', function (Request $request, $user, $postId) {
+    $socketId = $request->header('X-Socket-Id');
+    logger("Presence Live Stream", ['request' => $socketId]);
+
+    return ['user_id' => $user->id, 'username' => $user->username, 'socketId' => $socketId];
 });
