@@ -2,15 +2,13 @@
 
 namespace App\Services\API;
 
-use Modules\Identity\Identity;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Services\Shared\TransformerService;
 use App\Events\LiveStream;
-use App\Events\JoinPostEvent;
-use App\Events\ICECandidateEvent;
+use Modules\Identity\Identity;
+use App\Services\Shared\TransformerService;
 
-
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 
 use Modules\Core\Helpers\Response;
@@ -47,13 +45,12 @@ class PostServices extends TransformerService{
   public static function store(Request $request){
     $request->validate([
       'type' => 'required',
-      'socket_id' => 'required'
 		]);
 
 		$post = Post::create([
       'user_id' => Identity::currentUser('api')->id,
       'type' => $request->type,
-      'socket_id' => $request->socket_id
+      'status' => 'Live',
     ]);
     
     // if($post->type == 'Live'){
@@ -77,32 +74,6 @@ class PostServices extends TransformerService{
 
 
   /**
-   * Display the specified resource.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Post  $post
-   * @return \Illuminate\Http\Response
-   */
-  public static function join(Request $request, Post $post){
-    broadcast(new JoinPostEvent($post, $request->signal, $request->socket_id))->toOthers();
-
-    return Response::success();
-  }
-
-    /**
-   * Display the specified resource.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Post  $post
-   * @return \Illuminate\Http\Response
-   */
-  public static function addIce(Request $request, Post $post){
-    broadcast(new ICECandidateEvent($post, $request->candidate, $request->socket_id))->toOthers();
-
-    return Response::success();
-  }
-
-  /**
    * Return the edit page url
    *
    * @param  \App\Models\Post  $post
@@ -121,11 +92,15 @@ class PostServices extends TransformerService{
    */
   public static function update(Request $request, Post $post){
 		$request->validate([
-      'signal' => 'required',
+      'status' => [
+        'required',
+        Rule::in(['Live', 'Ended'])
+      ]
     ]);
-    
-    $post->signal = $request->signal;
+
+    $post->status = $request->status;
     $post->save();
+
 
 		return Response::success([
 			"message" => "post was successfully updated."
@@ -158,8 +133,7 @@ class PostServices extends TransformerService{
       'id' => $post->id,
       'user_id' => $post->user_id,
       'type' => $post->type,
-      'signal' => $post->signal,
-      'socket_id' => $post->socket_id,
+      'status' => $post->status,
 		];
 	}
 }
