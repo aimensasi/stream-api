@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('live-stream.{postId}', function (Request $request, $user, $postId) {
-    $socketId = $request->header('X-Socket-Id');
-    logger("Presence Live Stream", ['request' => $socketId]);
-
-    return ['user_id' => $user->id, 'username' => $user->username, 'socketId' => $socketId];
+Broadcast::channel('live-stream.{postId}', function ($user, $postId) {
+    return ['user_id' => $user->id, 'username' => $user->username];
 });
